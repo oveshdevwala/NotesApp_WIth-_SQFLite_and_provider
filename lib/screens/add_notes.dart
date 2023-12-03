@@ -55,7 +55,6 @@ class AddNotesScreens extends StatelessWidget {
                 } else {
                   rprovider.addnotesToList(context);
                   rprovider.facthDataToGrid();
-                  rprovider.fieldValueToNull(mindex);
                 }
               },
               style: TextButton.styleFrom(
