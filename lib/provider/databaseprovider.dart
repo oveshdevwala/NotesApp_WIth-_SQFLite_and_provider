@@ -85,9 +85,6 @@ class DatabaseProvider with ChangeNotifier {
 
   void updateToList(index, context) async {
     var db = MyDatabase.instance;
-
-    // titleController.text = data[index].modelTitle;
-    // discriptionController.text = data[index].modelDescription;
     db.updateNotes(await NotesModel(
         modelId: data[index].modelId,
         modelDate: currentDate,

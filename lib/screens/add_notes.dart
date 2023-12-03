@@ -16,10 +16,10 @@ class AddNotesScreens extends StatelessWidget {
     //   discriptionController.text ='';
     // }
     var mprovider = context.watch<DatabaseProvider>();
-    var rprovider = context.read<DatabaseProvider>();
-    if (mprovider.isUpdate != true) {
-      rprovider.fieldValueToNull(mindex);
-    }
+    // var rprovider = context.read<DatabaseProvider>();
+    // if (mprovider.isUpdate != true) {
+
+    // }
     return Scaffold(
       backgroundColor: uiColors.bgBlack,
       appBar: myaddnotesappbar(context, mindex),
@@ -51,9 +51,11 @@ class AddNotesScreens extends StatelessWidget {
                 if (wprovider.isUpdate == true) {
                   rprovider.updateToList(index, context);
                   wprovider.fieldValueToupdate(mindex);
+                  rprovider.fieldValueToNull(mindex);
                 } else {
                   rprovider.addnotesToList(context);
                   rprovider.facthDataToGrid();
+                  rprovider.fieldValueToNull(mindex);
                 }
               },
               style: TextButton.styleFrom(
