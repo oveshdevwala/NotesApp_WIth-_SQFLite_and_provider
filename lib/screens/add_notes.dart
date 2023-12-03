@@ -11,18 +11,12 @@ class AddNotesScreens extends StatelessWidget {
   var mindex;
   @override
   Widget build(BuildContext context) {
-    // if(context.watch<DatabaseProvider>().isUpdate ==false){
-    //   titleController.text ='';
-    //   discriptionController.text ='';
-    // }
+   
     var mprovider = context.watch<DatabaseProvider>();
-    // var rprovider = context.read<DatabaseProvider>();
-    // if (mprovider.isUpdate != true) {
-
-    // }
+   
     return Scaffold(
       backgroundColor: uiColors.bgBlack,
-      appBar: myaddnotesappbar(context, mindex),
+      appBar: myaddnotesappbar(context),
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -35,7 +29,7 @@ class AddNotesScreens extends StatelessWidget {
     );
   }
 
-  AppBar myaddnotesappbar(BuildContext context, index) {
+  AppBar myaddnotesappbar(BuildContext context) {
     var wprovider = context.watch<DatabaseProvider>();
     var rprovider = context.read<DatabaseProvider>();
     return AppBar(
@@ -47,15 +41,18 @@ class AddNotesScreens extends StatelessWidget {
           width: wprovider.isUpdate == true ? 110 : 90,
           height: 40,
           child: TextButton(
+              // onPressed: () {
+              //   if (wprovider.isUpdate == true) {
+              //     rprovider.updateToList(mindex, context);
+              //     wprovider.fieldValueToupdate(mindex);
+              //     rprovider.fieldValueToNull();
+              //   } else {
+              //     rprovider.addnotesToList(context);
+              //     rprovider.facthDataToGrid();
+              //   }
+              // },
               onPressed: () {
-                if (wprovider.isUpdate == true) {
-                  rprovider.updateToList(index, context);
-                  wprovider.fieldValueToupdate(mindex);
-                  rprovider.fieldValueToNull(mindex);
-                } else {
-                  rprovider.addnotesToList(context);
-                  rprovider.facthDataToGrid();
-                }
+                rprovider.addnotes(context, mindex);
               },
               style: TextButton.styleFrom(
                   side: BorderSide(color: uiColors.greenShade),

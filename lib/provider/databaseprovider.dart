@@ -64,12 +64,47 @@ class DatabaseProvider with ChangeNotifier {
     });
   }
 
+  void addnotes(context, index) async {
+    if (isUpdate == true) {
+      var db = MyDatabase.instance;
+      db.updateNotes(await NotesModel(
+          modelId: data[index].modelId,
+          modelDate: currentDate,
+          modelTitle: titleController.text.toString(),
+          modelDescription: discriptionController.text.toString()));
+      Navigator.pop(context);
+      // titleController.text = data[index].modelTitle.toString();
+      // discriptionController.text = data[index].modelDescription.toString();
+      titleController.text = '';
+      discriptionController.text = '';
+    } else {
+      if (titleController.text.isNotEmpty &&
+          discriptionController.text.isNotEmpty) {
+        print('Notes added');
+        var db = MyDatabase.instance;
+        db.createNotes(await NotesModel(
+            modelId: 0,
+            modelDate: currentDate,
+            modelTitle: titleController.text.toString(),
+            modelDescription: discriptionController.text.toString()));
+        Navigator.pop(context);
+        titleController.clear();
+        discriptionController.clear();
+      }
+      notifyListeners();
+      db = await MyDatabase.instance;
+      data = await db.facthData();
+      data.reversed;
+      notifyListeners();
+    }
+  }
+
   void fieldValueToupdate(index) {
     titleController.text = data[index].modelTitle.toString();
     discriptionController.text = data[index].modelDescription.toString();
   }
 
-  void fieldValueToNull(index) {
+  void fieldValueToNull() {
     titleController.text = '';
     discriptionController.text = '';
   }
@@ -92,5 +127,4 @@ class DatabaseProvider with ChangeNotifier {
         modelDescription: discriptionController.text.toString()));
     Navigator.pop(context);
   }
-  
 }
