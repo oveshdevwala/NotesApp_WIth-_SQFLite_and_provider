@@ -13,7 +13,7 @@ class notesViewOntap extends StatelessWidget {
   Widget build(BuildContext context) {
     var provider = context.watch<DatabaseProvider>();
     var rprovider = context.read<DatabaseProvider>();
-    
+
     return Scaffold(
       backgroundColor: uiColors.bgBlack,
       appBar: AppBar(
@@ -57,7 +57,10 @@ class notesViewOntap extends StatelessWidget {
               '${provider.data[mindex].modelTitle}',
               style: TextStyle(fontSize: 20, color: uiColors.white),
             ),
-            SizedBox(height: 15),
+            SizedBox(height: 8),
+            Text(provider.data[mindex].modelDate,
+                style: TextStyle(fontSize: 14, color: uiColors.textGrey)),
+            SizedBox(height: 8),
             Text(
               '${provider.data[mindex].modelDescription}',
               style: TextStyle(fontSize: 16, color: uiColors.white),

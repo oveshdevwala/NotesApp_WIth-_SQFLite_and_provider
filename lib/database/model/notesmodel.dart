@@ -2,7 +2,7 @@ import 'package:notes_app_with_database_and_provider/database/database.dart';
 
 class NotesModel {
 //variables
- int modelId;
+  int modelId;
   String modelDate;
   String modelTitle;
   String modelDescription;
@@ -18,7 +18,7 @@ class NotesModel {
   factory NotesModel.fromMap(Map<String, dynamic> map) {
     return NotesModel(
         modelId: map[MyDatabase.colId],
-        modelDate: map[MyDatabase.colDiscrption],
+        modelDate: map[MyDatabase.colDate],
         modelTitle: map[MyDatabase.colTitle],
         modelDescription: map[MyDatabase.colDiscrption]);
   }
