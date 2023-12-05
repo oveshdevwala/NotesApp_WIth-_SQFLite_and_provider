@@ -21,6 +21,7 @@ class _HomeScreenState extends State<HomeScreen> {
     super.initState();
     print('Init State called!!!');
     getallnotes();
+    // context.read<DatabaseProvider>().facthDataToGrid();
   }
 
   getallnotes() async {
