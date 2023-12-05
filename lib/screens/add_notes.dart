@@ -41,6 +41,7 @@ class AddNotesScreens extends StatelessWidget {
           child: TextButton(
               onPressed: () {
                 rprovider.addnotes(context, mindex);
+                rprovider.facthDataToGrid();
               },
               style: TextButton.styleFrom(
                   side: BorderSide(color: uiColors.greenShade),

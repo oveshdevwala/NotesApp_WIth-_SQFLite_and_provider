@@ -6,26 +6,20 @@ import 'package:notes_app_with_database_and_provider/screens/add_notes.dart';
 class DatabaseProvider with ChangeNotifier {
   var isUpdate = false;
   late MyDatabase db;
+  DatabaseProvider({required this.db});
   var titleController = TextEditingController();
   var discriptionController = TextEditingController();
-
   List<NotesModel> data = [];
-
-  void facthDataToGrid() async {
-    db = await MyDatabase.instance;
+  Future<void> facthDataToGrid() async {
     data = await db.facthData();
-    data.reversed;
     notifyListeners();
   }
-
   var currentDate =
       '${DateTime.now().day}/${DateTime.now().month}/${DateTime.now().year}';
   void addnotesToList(context) async {
     if (titleController.text.isNotEmpty &&
         discriptionController.text.isNotEmpty) {
       print('Notes added');
-      var db = MyDatabase.instance;
-
       db.createNotes(await NotesModel(
           modelId: 0,
           modelDate: currentDate,
@@ -34,6 +28,7 @@ class DatabaseProvider with ChangeNotifier {
       Navigator.pop(context);
       titleController.clear();
       discriptionController.clear();
+      data = await db.facthData();
     }
     notifyListeners();
   }
@@ -52,12 +47,13 @@ class DatabaseProvider with ChangeNotifier {
                 TextButton(
                     onPressed: () async {
                       db.deleteNotes(id);
-                      notifyListeners();
                       Navigator.pop(context);
+                      facthDataToGrid();
                     },
                     child: Text('Yes'))
               ],
             ));
+    notifyListeners();
   }
 
   void addnotes(context, index) async {
@@ -71,11 +67,11 @@ class DatabaseProvider with ChangeNotifier {
       Navigator.pop(context);
       titleController.text = '';
       discriptionController.text = '';
+      data = await db.facthData();
     } else {
       if (titleController.text.isNotEmpty &&
           discriptionController.text.isNotEmpty) {
         print('Notes added');
-        var db = MyDatabase.instance;
         db.createNotes(await NotesModel(
             modelId: 0,
             modelDate: currentDate,
@@ -85,17 +81,13 @@ class DatabaseProvider with ChangeNotifier {
         titleController.clear();
         discriptionController.clear();
       }
-      db = await MyDatabase.instance;
       data = await db.facthData();
-      data.reversed;
-      notifyListeners();
     }
+    notifyListeners();
+    facthDataToGrid();
   }
 
-  void fieldValueToupdate(index) {
-    titleController.text = data[index].modelTitle.toString();
-    discriptionController.text = data[index].modelDescription.toString();
-  }
+  void fieldValueToupdate(index) {}
 
   void fieldValueToNull() {
     titleController.text = '';
@@ -103,6 +95,9 @@ class DatabaseProvider with ChangeNotifier {
   }
 
   void navigatorToUpdatePage(context, mindex) {
+    titleController.text = data[mindex].modelTitle.toString();
+    discriptionController.text = data[mindex].modelDescription.toString();
+
     Navigator.push(
         context,
         MaterialPageRoute(
@@ -111,13 +106,13 @@ class DatabaseProvider with ChangeNotifier {
                 )));
   }
 
-  void updateToList(index, context) async {
-    var db = MyDatabase.instance;
-    db.updateNotes(await NotesModel(
-        modelId: data[index].modelId,
-        modelDate: currentDate,
-        modelTitle: titleController.text.toString(),
-        modelDescription: discriptionController.text.toString()));
-    Navigator.pop(context);
-  }
+  // void updateToList(index, context) async {
+  //   var db = MyDatabase.instance;
+  //   db.updateNotes(await NotesModel(
+  //       modelId: data[index].modelId,
+  //       modelDate: currentDate,
+  //       modelTitle: titleController.text.toString(),
+  //       modelDescription: discriptionController.text.toString()));
+  //   Navigator.pop(context);
+  // }
 }

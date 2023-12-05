@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:notes_app_with_database_and_provider/database/database.dart';
 import 'package:notes_app_with_database_and_provider/provider/databaseprovider.dart';
 import 'package:notes_app_with_database_and_provider/screens/homenotes.dart';
 import 'package:provider/provider.dart';
 
 void main() {
   runApp(ChangeNotifierProvider(
-    create: (_) => DatabaseProvider(),
+    create: (_) => DatabaseProvider(db: MyDatabase.instance),
     child: MyApp(),
   ));
 }

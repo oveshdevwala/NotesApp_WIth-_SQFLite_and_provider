@@ -1,3 +1,5 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:notes_app_with_database_and_provider/database/colors.dart';
@@ -6,13 +8,29 @@ import 'package:notes_app_with_database_and_provider/screens/add_notes.dart';
 import 'package:notes_app_with_database_and_provider/screens/notesview.dart';
 import 'package:provider/provider.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   HomeScreen({super.key});
 
   @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  @override
+  void initState() {
+    super.initState();
+    print('Init State called!!!');
+    getallnotes();
+  }
+
+  getallnotes() async {
+    await context.read<DatabaseProvider>().facthDataToGrid();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    context.watch<DatabaseProvider>().facthDataToGrid();
-    print('Build Function called');
+    print('Build Function called!!!');
+    // context.read<DatabaseProvider>().facthDataToGrid();
     var mprovider = context.read<DatabaseProvider>();
     return Scaffold(
         backgroundColor: uiColors.bgBlack,
@@ -78,12 +96,12 @@ class HomeScreen extends StatelessWidget {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
+                        SizedBox(height: 200),
                         Lottie.asset('assets/lottie/emptyNotes.json'),
                         Text(
                           "Empty Notes",
                           style: TextStyle(fontSize: 20, color: uiColors.white),
                         ),
-                        SizedBox(height: 100)
                       ],
                     ),
                   )
