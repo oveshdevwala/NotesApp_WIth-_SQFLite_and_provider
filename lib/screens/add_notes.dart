@@ -2,7 +2,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:notes_app_with_database_and_provider/database/colors.dart';
-// import 'package:notes_app_with_database_and_provider/database/model/notesmodel.dart';
 import 'package:notes_app_with_database_and_provider/provider/databaseprovider.dart';
 import 'package:provider/provider.dart';
 
@@ -11,9 +10,8 @@ class AddNotesScreens extends StatelessWidget {
   var mindex;
   @override
   Widget build(BuildContext context) {
-   
     var mprovider = context.watch<DatabaseProvider>();
-   
+
     return Scaffold(
       backgroundColor: uiColors.bgBlack,
       appBar: myaddnotesappbar(context),
@@ -41,16 +39,6 @@ class AddNotesScreens extends StatelessWidget {
           width: wprovider.isUpdate == true ? 110 : 90,
           height: 40,
           child: TextButton(
-              // onPressed: () {
-              //   if (wprovider.isUpdate == true) {
-              //     rprovider.updateToList(mindex, context);
-              //     wprovider.fieldValueToupdate(mindex);
-              //     rprovider.fieldValueToNull();
-              //   } else {
-              //     rprovider.addnotesToList(context);
-              //     rprovider.facthDataToGrid();
-              //   }
-              // },
               onPressed: () {
                 rprovider.addnotes(context, mindex);
               },
@@ -118,52 +106,52 @@ class discriptionTextField extends StatelessWidget {
   }
 }
 
-Column mytextfields() {
-  return Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-    SizedBox(
-      width: 320,
-      child: TextField(
-        style: TextStyle(fontSize: 20, color: uiColors.white),
-        cursorColor: uiColors.greenShade,
-        decoration: notesTextfielDecoration("Title"),
-      ),
-    ),
-    SizedBox(height: 10),
-    SizedBox(
-      width: 320,
-      child: TextField(
-        style: TextStyle(fontSize: 20, color: uiColors.white),
-        cursorColor: uiColors.greenShade,
-        decoration: notesTextfielDecoration('Discription'),
-      ),
-    ),
-    SizedBox(height: 20),
-    SizedBox(
-        width: 140,
-        child: TextButton(
-            onPressed: () {},
-            style: TextButton.styleFrom(
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(15)),
-              side: BorderSide(color: uiColors.white),
-              foregroundColor: uiColors.white,
-            ),
-            child: Text(
-              "Save",
-              style: TextStyle(fontSize: 22),
-            )))
-  ]);
-}
+// Column mytextfields() {
+//   return Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+//     SizedBox(
+//       width: 320,
+//       child: TextField(
+//         style: TextStyle(fontSize: 20, color: uiColors.white),
+//         cursorColor: uiColors.greenShade,
+//         decoration: notesTextfielDecoration("Title"),
+//       ),
+//     ),
+//     SizedBox(height: 10),
+//     SizedBox(
+//       width: 320,
+//       child: TextField(
+//         style: TextStyle(fontSize: 20, color: uiColors.white),
+//         cursorColor: uiColors.greenShade,
+//         decoration: notesTextfielDecoration('Discription'),
+//       ),
+//     ),
+//     SizedBox(height: 20),
+//     SizedBox(
+//         width: 140,
+//         child: TextButton(
+//             onPressed: () {},
+//             style: TextButton.styleFrom(
+//               shape: RoundedRectangleBorder(
+//                   borderRadius: BorderRadius.circular(15)),
+//               side: BorderSide(color: uiColors.white),
+//               foregroundColor: uiColors.white,
+//             ),
+//             child: Text(
+//               "Save",
+//               style: TextStyle(fontSize: 22),
+//             )))
+//   ]);
+// }
 
-InputDecoration notesTextfielDecoration(hint) {
-  return InputDecoration(
-      hintText: hint,
-      hintStyle: TextStyle(fontSize: 20, color: uiColors.white),
-      contentPadding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-      focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(15),
-          borderSide: BorderSide(color: uiColors.white)),
-      border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(15),
-          borderSide: BorderSide(color: uiColors.Bordergreen, width: 3)));
-}
+// InputDecoration notesTextfielDecoration(hint) {
+//   return InputDecoration(
+//       hintText: hint,
+//       hintStyle: TextStyle(fontSize: 20, color: uiColors.white),
+//       contentPadding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+//       focusedBorder: OutlineInputBorder(
+//           borderRadius: BorderRadius.circular(15),
+//           borderSide: BorderSide(color: uiColors.white)),
+//       border: OutlineInputBorder(
+//           borderRadius: BorderRadius.circular(15),
+//           borderSide: BorderSide(color: uiColors.Bordergreen, width: 3)));
+// }

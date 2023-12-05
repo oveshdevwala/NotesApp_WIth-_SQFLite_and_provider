@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:notes_app_with_database_and_provider/database/database.dart';
 import 'package:notes_app_with_database_and_provider/database/model/notesmodel.dart';
@@ -41,27 +39,25 @@ class DatabaseProvider with ChangeNotifier {
   }
 
   void deleteToList(int id, context) {
-    Timer(Duration(milliseconds: 500), () {
-      showDialog(
-          context: context,
-          builder: (context) => AlertDialog.adaptive(
-                title: Text('You Want To Delete This Note'),
-                actions: [
-                  TextButton(
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
-                      child: Text('No')),
-                  TextButton(
-                      onPressed: () {
-                        var db = MyDatabase.instance;
-                        db.deleteNotes(id);
-                        Navigator.pop(context);
-                      },
-                      child: Text('Yes'))
-                ],
-              ));
-    });
+    showDialog(
+        context: context,
+        builder: (context) => AlertDialog.adaptive(
+              title: Text('You Want To Delete This Note'),
+              actions: [
+                TextButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    child: Text('No')),
+                TextButton(
+                    onPressed: () async {
+                      db.deleteNotes(id);
+                      notifyListeners();
+                      Navigator.pop(context);
+                    },
+                    child: Text('Yes'))
+              ],
+            ));
   }
 
   void addnotes(context, index) async {
@@ -73,8 +69,6 @@ class DatabaseProvider with ChangeNotifier {
           modelTitle: titleController.text.toString(),
           modelDescription: discriptionController.text.toString()));
       Navigator.pop(context);
-      // titleController.text = data[index].modelTitle.toString();
-      // discriptionController.text = data[index].modelDescription.toString();
       titleController.text = '';
       discriptionController.text = '';
     } else {
@@ -91,7 +85,6 @@ class DatabaseProvider with ChangeNotifier {
         titleController.clear();
         discriptionController.clear();
       }
-      notifyListeners();
       db = await MyDatabase.instance;
       data = await db.facthData();
       data.reversed;

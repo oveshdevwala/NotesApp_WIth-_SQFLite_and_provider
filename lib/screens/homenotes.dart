@@ -8,6 +8,7 @@ import 'package:provider/provider.dart';
 
 class HomeScreen extends StatelessWidget {
   HomeScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     context.watch<DatabaseProvider>().facthDataToGrid();
@@ -17,77 +18,77 @@ class HomeScreen extends StatelessWidget {
         backgroundColor: uiColors.bgBlack,
         appBar: HomeAppbar(),
         floatingActionButton: addNoteButton(),
-        body: mprovider.data.length != 0
-            ? SingleChildScrollView(
-                child: Column(
-                children: [
-                  GridView.builder(
-                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 2,
-                          mainAxisSpacing: 10,
-                          crossAxisSpacing: 10),
-                      itemCount: context.watch<DatabaseProvider>().data.length,
-                      padding: EdgeInsets.all(12),
-                      shrinkWrap: true,
-                      physics: NeverScrollableScrollPhysics(),
-                      itemBuilder: (context, index) {
+        body: SingleChildScrollView(
+            child: Column(
+          children: [
+            mprovider.data.length != 0
+                ? GridView.builder(
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 2,
+                        mainAxisSpacing: 10,
+                        crossAxisSpacing: 10),
+                    itemCount: context.watch<DatabaseProvider>().data.length,
+                    padding: EdgeInsets.all(12),
+                    shrinkWrap: true,
+                    physics: NeverScrollableScrollPhysics(),
+                    itemBuilder: (context, index) {
+                      return Consumer<DatabaseProvider>(
+                          builder: (context, provider, child) {
                         print('Consumer called!!!!');
-                        return Consumer<DatabaseProvider>(
-                            builder: (context, provider, child) {
-                          return InkWell(
-                            splashColor: uiColors.greenShade,
-                            borderRadius: BorderRadius.circular(25),
-                            onLongPress: () async {
-                              mprovider.deleteToList(
-                                  mprovider.data[index].modelId, context);
-                            },
-                            onTap: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => notesViewOntap(
-                                            mindex: index,
-                                          )));
-                            },
-                            child: Container(
-                              height: 250,
-                              padding: EdgeInsets.all(15),
-                              decoration: BoxDecoration(
-                                  border: Border.all(
-                                      color: Colors.green,
-                                      width: 5,
-                                      strokeAlign: -0.5),
-                                  borderRadius: BorderRadius.circular(10),
-                                  color: uiColors.greenShade),
-                              child: GridTile(
-                                child: Text(
-                                  "${provider.data[index].modelTitle}",
-                                  style: TextStyle(
-                                      overflow: TextOverflow.ellipsis),
-                                  maxLines: 4,
-                                ),
-                                footer:
-                                    Text('${provider.data[index].modelDate}'),
+                        return InkWell(
+                          splashColor: uiColors.greenShade,
+                          borderRadius: BorderRadius.circular(25),
+                          onLongPress: () async {
+                            provider.deleteToList(
+                                provider.data[index].modelId, context);
+                            provider.facthDataToGrid();
+                          },
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => notesViewOntap(
+                                          mindex: index,
+                                        )));
+                          },
+                          child: Container(
+                            height: 250,
+                            padding: EdgeInsets.all(15),
+                            decoration: BoxDecoration(
+                                border: Border.all(
+                                    color: Colors.green,
+                                    width: 5,
+                                    strokeAlign: -0.5),
+                                borderRadius: BorderRadius.circular(10),
+                                color: uiColors.greenShade),
+                            child: GridTile(
+                              child: Text(
+                                "${provider.data[index].modelTitle}",
+                                style:
+                                    TextStyle(overflow: TextOverflow.ellipsis),
+                                maxLines: 4,
                               ),
+                              footer: Text('${provider.data[index].modelDate}'),
                             ),
-                          );
-                        });
-                      })
-                ],
-              ))
-            : Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Lottie.asset('assets/lottie/emptyNotes.json'),
-                    Text(
-                      "Empty Notes",
-                      style: TextStyle(fontSize: 20, color: uiColors.white),
+                          ),
+                        );
+                      });
+                    })
+                : Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Lottie.asset('assets/lottie/emptyNotes.json'),
+                        Text(
+                          "Empty Notes",
+                          style: TextStyle(fontSize: 20, color: uiColors.white),
+                        ),
+                        SizedBox(height: 100)
+                      ],
                     ),
-                    SizedBox(height: 100)
-                  ],
-                ),
-              ));
+                  )
+          ],
+        )));
   }
 
   AppBar HomeAppbar() {
@@ -97,19 +98,6 @@ class HomeScreen extends StatelessWidget {
         title: Center(child: Text('Notes')));
   }
 }
-
-// class homebody extends StatelessWidget {
-//   homebody({
-//     super.key,
-//   });
-
-//   @override
-//   Widget build(BuildContext context) {
-//     // print('Widget Buid!!! ${int}');
-//
-//     return
-//   }
-// }
 
 class addNoteButton extends StatelessWidget {
   const addNoteButton({

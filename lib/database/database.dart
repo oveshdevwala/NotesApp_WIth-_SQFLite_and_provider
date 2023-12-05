@@ -48,15 +48,15 @@ CREATE TABLE $dbtable (
 
 //createNotes
   void createNotes(NotesModel notesModel) async {
-    var db = await MyDatabase.instance.getDb();
-    await db.insert(MyDatabase.dbtable, notesModel.toMap());
+    var db = await getDb();
+    await db.insert(dbtable, notesModel.toMap());
   }
 
 //Facth Data
   Future<List<NotesModel>> facthData() async {
-    var db = await MyDatabase.instance.getDb();
+    var db = await getDb();
     List<NotesModel> arryData = [];
-    var data = await db.query(MyDatabase.dbtable);
+    var data = await db.query(dbtable);
     for (Map<String, dynamic> eachData in data) {
       var notemodel = NotesModel.fromMap(eachData);
       arryData.add(notemodel);
@@ -66,15 +66,14 @@ CREATE TABLE $dbtable (
 
 // Update Notes
   void updateNotes(NotesModel notesModel) async {
-    var db = await MyDatabase.instance.getDb();
-    db.update(MyDatabase.dbtable, notesModel.toMap(),
-        where: '${MyDatabase.colId} = ?',
-        whereArgs: [' ${notesModel.modelId}']);
+    var db = await getDb();
+    db.update(dbtable, notesModel.toMap(),
+        where: '${colId} = ?', whereArgs: [' ${notesModel.modelId}']);
   }
 
 //deleteNotes
   void deleteNotes(int id) async {
-    var db = await MyDatabase.instance.getDb();
-    db.delete(MyDatabase.dbtable, where: "${colId} = ?", whereArgs: ['${id}']);
+    var db = await getDb();
+    db.delete(dbtable, where: "${colId} = ?", whereArgs: ['${id}']);
   }
 }

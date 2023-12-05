@@ -7,7 +7,6 @@ import 'package:provider/provider.dart';
 
 class notesViewOntap extends StatelessWidget {
   notesViewOntap({super.key, required this.mindex});
-
   var mindex;
   @override
   Widget build(BuildContext context) {
